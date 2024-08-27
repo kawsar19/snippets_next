@@ -46,7 +46,7 @@ export default function Home() {
               </h2>
               <ul>
                 {Object.keys(gist.files).map((file) => (
-                  <li key={file} className="mb-1">
+                  <li key={file} className="mb-1  flex justify-between">
                     <a
                       href={gist.files[file].raw_url}
                       target="_blank"
@@ -55,6 +55,9 @@ export default function Home() {
                     >
                       {gist.files[file].filename}
                     </a>
+                    <span className="bg-green-500 rounded p-1  text-white ms-1">
+                      {gist.files[file].language}
+                    </span>
                   </li>
                 ))}
               </ul>
