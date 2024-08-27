@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import {
   deleteAccessToken,
   getAccessTokenFromCookies,
@@ -8,6 +8,9 @@ import {
   setLanguageToCookies,
 } from "@/actions/actions";
 import Link from "next/link";
+interface Props {
+  setToken: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +31,12 @@ const Header = () => {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
 
-  const handleTokenChange = (e) => setToken(e.target.value);
+  const handleTokenChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    setToken: Props["setToken"]
+  ) => {
+    setToken(e.target.value);
+  };
 
   const handleTokenSubmit = async () => {
     if (token) {
