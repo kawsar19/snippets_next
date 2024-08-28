@@ -8,9 +8,6 @@ import {
   setLanguageToCookies,
 } from "@/actions/actions";
 import Link from "next/link";
-interface Props {
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-}
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +31,7 @@ const Header = () => {
   const handleTokenChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setToken(e.target.value);
   };
+
   const handleTokenSubmit = async () => {
     if (token) {
       await setAccessTokenToCookies(token);
@@ -78,12 +76,35 @@ const Header = () => {
           </button>
         </div>
       </div>
-      <div className="h-16 bg-red-300 ">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed illum esse
-        eligendi harum nesciunt quas sapiente placeat saepe quibusdam molestiae
-        necessitatibus dolorem itaque temporibus animi maiores architecto
-        possimus, dolore adipisci?
-      </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-semibold mb-4">Set Access Token</h2>
+            <input
+              type="text"
+              value={token}
+              onChange={handleTokenChange}
+              className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+              placeholder="Enter access token"
+            />
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={handleModalClose}
+                className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleTokenSubmit}
+                className="bg-[#7E33E0] text-white px-4 py-2 rounded-lg hover:bg-[#6a29c8] transition-colors"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
